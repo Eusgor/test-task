@@ -9,7 +9,7 @@ def get_packages(branch):
     if response.status_code != 200:
         print("Use branches sisyphus, p10 or p9")
         exit(1)
-        
+
     return json.loads(response.text)
 
 def create_dict(data):
@@ -40,6 +40,13 @@ def compare(branch1, branch2):
         result.setdefault(arch, {})
         result[arch][f"only_in_{branch1}"] = only_in1
         result[arch][f"only_in_{branch2}"] = only_in2
+
+        ver_greater_in1 = []
+        for pkg in data_names:
+            if (pkg_dict1[arch][pkg]["version"] >
+                    pkg_dict2[arch][pkg]["version"]):
+                ver_greater_in1.append(pkg_dict1[arch][pkg])
+        result[arch][f"version_greater_in_{branch1}"] = ver_greater_in1
 
     wtfile(result, "result")
 
