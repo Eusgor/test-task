@@ -27,13 +27,14 @@ def compare(branch1, branch2):
     pkg_dict1 = create_dict(data1)
     pkg_dict2 = create_dict(data2)
 
+    archs = set(pkg_dict1.keys()).intersection(set(pkg_dict2.keys()))
     result = {}
-    for arch, val in pkg_dict1.items():
+    for arch in sorted(archs):
         data1_names = set(pkg_dict1[arch].keys())
         data2_names = set(pkg_dict2[arch].keys())
         data_names = data1_names.intersection(data2_names)
         
-        only_in1 = [val[pkg] for pkg in val 
+        only_in1 = [pkg_dict1[arch][pkg] for pkg in pkg_dict1[arch] 
                     if pkg not in data2_names]
         only_in2 = [pkg_dict2[arch][pkg] for pkg in pkg_dict2[arch] 
                     if pkg not in data1_names]
