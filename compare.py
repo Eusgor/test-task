@@ -4,13 +4,12 @@ import json
 
 def get_packages(branch):
     url = f"https://rdb.altlinux.org/api/export/branch_binary_packages/{branch}"
-    try:
-        response = requests.get(url)
-        response.raise_for_status()
-    except Exception as e:
-        print(f'Error: {str(e)}')
+    
+    response = requests.get(url)
+    if response.status_code != 200:
         print("Use branches sisyphus, p10 or p9")
         exit(1)
+        
     return json.loads(response.text)
 
 def create_dict(data):
