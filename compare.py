@@ -3,7 +3,8 @@ import json
 
 
 def get_packages(branch):
-    url = f"https://rdb.altlinux.org/api/export/branch_binary_packages/{branch}"
+    api_url = "https://rdb.altlinux.org/api/"
+    url = f"{api_url}export/branch_binary_packages/{branch}"
     
     response = requests.get(url)
     if response.status_code != 200:
@@ -38,15 +39,16 @@ def compare(branch1, branch2):
                     if pkg not in data1_names]
         
         result.setdefault(arch, {})
-        result[arch][f"only_in_{branch1}"] = only_in1
-        result[arch][f"only_in_{branch2}"] = only_in2
+        result[arch][f"Packages_only_in_{branch1}"] = only_in1
+        result[arch][f"Packages_only_in_{branch2}"] = only_in2
 
         ver_greater_in1 = []
         for pkg in data_names:
             if (pkg_dict1[arch][pkg]["version"] >
                     pkg_dict2[arch][pkg]["version"]):
                 ver_greater_in1.append(pkg_dict1[arch][pkg])
-        result[arch][f"version_greater_in_{branch1}"] = ver_greater_in1
+        ver_greater_name = f"Package_versions_greater_in_{branch1}"
+        result[arch][ver_greater_name] = ver_greater_in1
 
     wtfile(result, "result")
 
