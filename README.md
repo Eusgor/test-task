@@ -24,9 +24,9 @@ arguments:
 test-task saves the result in the 'result' file in JSON format.
 
 The result format:
-```json
+```javascript
 {
-    arch: {
+    "arch": {
         "Packages_only_in_branch1": [
             package,
             package,
