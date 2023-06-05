@@ -16,8 +16,8 @@ test-task requires the following software:
 To run test-task do:
 
 ```sh
-- cd test-task
-- python3 main.py [-h] branch1 branch2
+cd test-task
+python3 main.py [-h] branch1 branch2
 ```
 arguments: 
 - -h - for help (optional) 
@@ -56,7 +56,7 @@ where
 - arch - package architecture
 - Packages_only_in_branch1 - all packages that are in branch1 but not in branch2
 - Packages_only_in_branch2 - all packages that are in branch2 but not in branch1
-- Package_versions_greater_in_branch1 - all packages whose version-release is larger in branch1 than in branch2
+- Package_versions_greater_in_branch1 - all packages whose version-release is greater in branch1 than in branch2
 - package - package info in the format:
 ```javascript
     {
