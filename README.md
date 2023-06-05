@@ -4,7 +4,9 @@ test-task compares binary packages between two branches from public REST API 'ht
 
 ## Installing
 
-'git clone https://github.com/Eusgor/test-task.git'
+```sh
+git clone https://github.com/Eusgor/test-task.git
+```
 
 ## Running test-task
 
@@ -13,8 +15,10 @@ test-task requires the following software:
 
 To run test-task do:
 
+```sh
 - cd test-task
 - python3 main.py [-h] branch1 branch2
+```
 arguments: 
 - -h - for help (optional) 
 - branch1 and branch2 - allowed branch names are: sisyphus, p9 or p10
@@ -54,6 +58,7 @@ where
 - Packages_only_in_branch2 - all packages that are in branch2 but not in branch1
 - Package_versions_greater_in_branch1 - all packages whose version-release is larger in branch1 than in branch2
 - package - package info in the format:
+```javascript
     {
       "name": "string",
       "epoch": 0,
@@ -64,3 +69,4 @@ where
       "buildtime": 0,
       "source": "string"
     }
+```
