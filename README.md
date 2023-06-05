@@ -14,7 +14,7 @@ test-task requires the following software:
 To run test-task execute:
 
 'cd test-task'
-'python3 main.py [-h] <branch1> <branch2>'
+'python3 main.py [-h] branch1 branch2'
 arguments: 
 - -h - for help (optional) 
 - branch1 and branch2 - allowed branch names are: sisyphus, p9 or p10
@@ -25,18 +25,18 @@ test-task saves the result in the 'result' file in JSON format.
 
 The result format:
 {
-    <arch>: {
-        "Packages_only_in_<branch1>": [
+    arch: {
+        "Packages_only_in_branch1": [
             package,
             package,
             ...
         ],
-        "Packages_only_in_<branch2>": [
+        "Packages_only_in_branch2": [
             package,
             package,
             ...
         ],
-        "Package_versions_greater_in_<branch1>": [
+        "Package_versions_greater_in_branch1": [
             package,
             package,
             ...
@@ -48,9 +48,9 @@ The result format:
 
 where
 - arch - package architecture
-- Packages_only_in_<branch1> - all packages that are in branch1 but not in branch2
-- Packages_only_in_<branch2> - all packages that are in branch2 but not in branch1
-- Package_versions_greater_in_<branch1> - all packages whose version-release is larger in branch1 than in branch2
+- Packages_only_in_branch1 - all packages that are in branch1 but not in branch2
+- Packages_only_in_branch2 - all packages that are in branch2 but not in branch1
+- Package_versions_greater_in_branch1 - all packages whose version-release is larger in branch1 than in branch2
 - package - package info in the format:
     {
       "name": "string",
