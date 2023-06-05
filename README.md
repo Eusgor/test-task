@@ -11,10 +11,10 @@ test-task compares binary packages between two branches from public REST API 'ht
 test-task requires the following software:
 - python (python3)
 
-To run test-task execute:
+To run test-task do:
 
-'cd test-task'
-'python3 main.py [-h] branch1 branch2'
+- cd test-task
+- python3 main.py [-h] branch1 branch2
 arguments: 
 - -h - for help (optional) 
 - branch1 and branch2 - allowed branch names are: sisyphus, p9 or p10
@@ -24,6 +24,7 @@ arguments:
 test-task saves the result in the 'result' file in JSON format.
 
 The result format:
+```json
 {
     arch: {
         "Packages_only_in_branch1": [
@@ -45,6 +46,7 @@ The result format:
     ...
     ...
 }
+```
 
 where
 - arch - package architecture
