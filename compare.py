@@ -8,7 +8,7 @@ def get_packages(branch):
     
     response = requests.get(url)
     if response.status_code != 200:
-        print("Use branches sisyphus, p10 or p9")
+        print("Use sisyphus, p10 or p9 branches")
         exit(1)
 
     return json.loads(response.text)
