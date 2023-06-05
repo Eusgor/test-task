@@ -17,7 +17,7 @@ To run test-task do:
 
 ```sh
 cd test-task
-python3 main.py [-h] branch1 branch2
+python main.py [-h] branch1 branch2
 ```
 arguments: 
 - -h - for help (optional) 
