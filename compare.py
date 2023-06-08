@@ -46,7 +46,9 @@ def compare(branch1, branch2):
         ver_greater_in1 = []
         for pkg in data_names:
             if (pkg_dict1[arch][pkg]["version"] >
-                    pkg_dict2[arch][pkg]["version"]):
+                    pkg_dict2[arch][pkg]["version"] and 
+                    pkg_dict1[arch][pkg]["release"] >
+                    pkg_dict2[arch][pkg]["release"]):
                 ver_greater_in1.append(pkg_dict1[arch][pkg])
         ver_greater_name = f"Package_versions_greater_in_{branch1}"
         result[arch][ver_greater_name] = ver_greater_in1
