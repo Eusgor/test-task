@@ -3,6 +3,58 @@ import json
 import re
 
 
+class Version:
+
+    def __init__(self, ver, rel):
+        self.version = [i for i in re.findall("\d+|[A-Za-z]+", ver)]
+        self.release = [i for i in re.findall("\d+|[A-Za-z]+", rel)]
+    
+    def __compare(self, version, other, lmin, lmax):
+        for i in range(lmax):
+            if i == lmin:
+                if len(version) > len(other):
+                    return 1
+                elif len(version) < len(other):
+                    return -1
+                break
+
+            v1 = version[i]
+            v2 = other[i]
+
+            if v1.isdigit() and v2.isdigit():
+                if int(v1) > int(v2):
+                    return 1
+                elif int(v1) < int(v2):
+                    return -1
+            elif v1.isalpha() and v2.isalpha():
+                if v1 > v2:
+                    return 1
+                elif v1 < v2:
+                    return -1
+            elif v1.isdigit():
+                return 1
+            elif v2.isdigit():
+                return -1
+            
+        return 0
+
+    def __gt__(self, other):
+        lmax = max(len(self.version), len(other.version))
+        lmin = min(len(self.version), len(other.version))
+
+        res = self.__compare(self.version, other.version, lmin, lmax)
+        if res == 0:
+            lmax = max(len(self.release), len(other.release))
+            lmin = min(len(self.release), len(other.release))
+            
+            res = self.__compare(self.release, other.release, lmin, lmax)
+
+        if res == 1:
+            return True
+        
+        return False
+
+
 def get_packages(branch):
     api_url = "https://rdb.altlinux.org/api/"
     url = f"{api_url}export/branch_binary_packages/{branch}"
@@ -23,20 +75,10 @@ def create_dict(data):
 
 def ver_compare(ver1, rel1, ver2, rel2):
 
-    vlist1 = [int(i) for i in re.split("\D+", ver1) if i != ""]
-    vlist2 = [int(i) for i in re.split("\D+", ver2) if i != ""]
-
-    if vlist1 > vlist2:
-        return True
-    elif vlist1 == vlist2:
+    version1 = Version(ver1, rel1)       
+    version2 = Version(ver2, rel2)
     
-        rlist1 = [int(i) for i in re.split("\D+", rel1) if i != ""]
-        rlist2 = [int(i) for i in re.split("\D+", rel2) if i != ""]
-
-        if rlist1 > rlist2:
-            return True
-        
-    return False
+    return version1 > version2
 
 def compare(branch1, branch2):
     data1 = get_packages(branch1)["packages"]
@@ -70,7 +112,7 @@ def compare(branch1, branch2):
             
             if ret:
                 ver_greater_in1.append(pkg_dict1[arch][pkg])
-            
+
         ver_greater_name = f"Package_versions_greater_in_{branch1}"
         result[arch][ver_greater_name] = ver_greater_in1
 
