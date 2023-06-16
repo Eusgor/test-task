@@ -73,11 +73,16 @@ def create_dict(data):
         dct[pkg["arch"]][pkg["name"]] = pkg
     return dct
 
-def ver_compare(ver1, rel1, ver2, rel2):
+def ver_compare(ver1, rel1, epoch1, ver2, rel2, epoch2):
+
+    if epoch1 > epoch2:
+        return True
+    elif epoch1 < epoch2:
+        return False
 
     version1 = Version(ver1, rel1)       
     version2 = Version(ver2, rel2)
-    
+
     return version1 > version2
 
 def compare(branch1, branch2):
@@ -107,8 +112,10 @@ def compare(branch1, branch2):
         for pkg in data_names:
             ret = ver_compare(pkg_dict1[arch][pkg]["version"], 
                               pkg_dict1[arch][pkg]["release"],
+                              int(pkg_dict1[arch][pkg]["epoch"]),
                               pkg_dict2[arch][pkg]["version"], 
-                              pkg_dict2[arch][pkg]["release"])
+                              pkg_dict2[arch][pkg]["release"],
+                              int(pkg_dict2[arch][pkg]["epoch"]))
             
             if ret:
                 ver_greater_in1.append(pkg_dict1[arch][pkg])
