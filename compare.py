@@ -28,25 +28,26 @@ class Version:
             v1 = version[i]
             v2 = other[i]
 
-            if v1.isdigit() and v2.isdigit():
-                if int(v1) > int(v2):
+            if v1.isdigit():
+                if v2.isdigit():
+                    if int(v1) > int(v2):
+                        return 1
+                    elif int(v1) < int(v2):
+                        return -1
+                else:               
                     return 1
-                elif int(v1) < int(v2):
-                    return -1
             elif v1.isalpha() and v2.isalpha():
                 if v1 > v2:
                     return 1
                 elif v1 < v2:
                     return -1
-            elif v1.isdigit():
-                return 1
-            elif v2.isdigit():
+            else:
                 return -1
             
         return 0
 
     def __gt__(self, other):
-        
+
         if self.epoch > other.epoch:
             return True
         elif self.epoch < other.epoch:
