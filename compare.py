@@ -6,8 +6,8 @@ import re
 class Version:
 
     def __init__(self, ver, rel, epoch):
-        self.version = [i for i in re.findall("\d+|[A-Za-z]+", ver)]
-        self.release = [i for i in re.findall("\d+|[A-Za-z]+", rel)]
+        self.version = re.findall("\d+|[A-Za-z]+", ver)
+        self.release = re.findall("\d+|[A-Za-z]+", rel)
         self.epoch = epoch
     
     def __compare(self, version, other):
