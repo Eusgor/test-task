@@ -5,9 +5,10 @@ import re
 
 class Version:
 
-    def __init__(self, ver, rel):
+    def __init__(self, ver, rel, epoch):
         self.version = [i for i in re.findall("\d+|[A-Za-z]+", ver)]
         self.release = [i for i in re.findall("\d+|[A-Za-z]+", rel)]
+        self.epoch = epoch
     
     def __compare(self, version, other):
         slen = len(version)
@@ -15,7 +16,7 @@ class Version:
 
         lmax = max(slen, olen)
         lmin = min(slen, olen)
-        
+
         for i in range(lmax):
             if i == lmin:
                 if slen > olen:
@@ -45,6 +46,12 @@ class Version:
         return 0
 
     def __gt__(self, other):
+        
+        if self.epoch > other.epoch:
+            return True
+        elif self.epoch < other.epoch:
+            return False
+        
         res = self.__compare(self.version, other.version)
 
         if res == 0:            
@@ -76,13 +83,8 @@ def create_dict(data):
 
 def ver_compare(ver1, rel1, epoch1, ver2, rel2, epoch2):
 
-    if epoch1 > epoch2:
-        return True
-    elif epoch1 < epoch2:
-        return False
-
-    version1 = Version(ver1, rel1)       
-    version2 = Version(ver2, rel2)
+    version1 = Version(ver1, rel1, epoch1)       
+    version2 = Version(ver2, rel2, epoch2)
 
     return version1 > version2
 
