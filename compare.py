@@ -9,12 +9,18 @@ class Version:
         self.version = [i for i in re.findall("\d+|[A-Za-z]+", ver)]
         self.release = [i for i in re.findall("\d+|[A-Za-z]+", rel)]
     
-    def __compare(self, version, other, lmin, lmax):
+    def __compare(self, version, other):
+        slen = len(version)
+        olen = len(other)
+
+        lmax = max(slen, olen)
+        lmin = min(slen, olen)
+        
         for i in range(lmax):
             if i == lmin:
-                if len(version) > len(other):
+                if slen > olen:
                     return 1
-                elif len(version) < len(other):
+                elif slen < olen:
                     return -1
                 break
 
@@ -39,15 +45,10 @@ class Version:
         return 0
 
     def __gt__(self, other):
-        lmax = max(len(self.version), len(other.version))
-        lmin = min(len(self.version), len(other.version))
+        res = self.__compare(self.version, other.version)
 
-        res = self.__compare(self.version, other.version, lmin, lmax)
-        if res == 0:
-            lmax = max(len(self.release), len(other.release))
-            lmin = min(len(self.release), len(other.release))
-            
-            res = self.__compare(self.release, other.release, lmin, lmax)
+        if res == 0:            
+            res = self.__compare(self.release, other.release)
 
         if res == 1:
             return True
